@@ -5,10 +5,12 @@ import org.bukkit.Location;
 public class Distance {
     private Location loc;
     private double distance;
+    private boolean goingOnX;
 
-    public Distance(Location loc, double distance) {
+    public Distance(Location loc, double distance,boolean goingOnX) {
         this.loc = loc;
         this.distance = distance;
+        this.goingOnX = goingOnX;
     }
 
     public Location getLoc() {
@@ -25,5 +27,13 @@ public class Distance {
 
     public void setDistance(double distance) {
         this.distance = distance;
+    }
+
+    public boolean isGoingOnX() {
+        return goingOnX;
+    }
+
+    public void setGoingOnX(boolean goingOnX) {
+        this.goingOnX = goingOnX;
     }
 }

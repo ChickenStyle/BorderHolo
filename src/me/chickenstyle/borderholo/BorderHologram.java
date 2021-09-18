@@ -57,10 +57,10 @@ public class BorderHologram extends JavaPlugin implements Listener {
                             double distance = loopLoc.distance(player.getLocation());
                             if (distances.containsKey(player.getUniqueId())) {
                                 if (distance < distances.get(player.getUniqueId()).getDistance()) {
-                                    distances.put(player.getUniqueId(),new Distance(loopLoc.clone(),distance));
+                                    distances.put(player.getUniqueId(),new Distance(loopLoc.clone(),distance,true));
                                 }
                             } else {
-                                distances.put(player.getUniqueId(),new Distance(loopLoc.clone(),distance));
+                                distances.put(player.getUniqueId(),new Distance(loopLoc.clone(),distance,true));
                             }
 
                         }
@@ -75,10 +75,10 @@ public class BorderHologram extends JavaPlugin implements Listener {
                             double distance = loopLoc.distance(player.getLocation());
                             if (distances.containsKey(player.getUniqueId())) {
                                 if (distance < distances.get(player.getUniqueId()).getDistance()) {
-                                    distances.put(player.getUniqueId(),new Distance(loopLoc.clone(),distance));
+                                    distances.put(player.getUniqueId(),new Distance(loopLoc.clone(),distance,false));
                                 }
                             } else {
-                                distances.put(player.getUniqueId(),new Distance(loopLoc.clone(),distance));
+                                distances.put(player.getUniqueId(),new Distance(loopLoc.clone(),distance,false));
                             }
 
                         }
@@ -92,10 +92,10 @@ public class BorderHologram extends JavaPlugin implements Listener {
                             double distance = loopLoc.distance(player.getLocation());
                             if (distances.containsKey(player.getUniqueId())) {
                                 if (distance < distances.get(player.getUniqueId()).getDistance()) {
-                                    distances.put(player.getUniqueId(),new Distance(loopLoc.clone(),distance));
+                                    distances.put(player.getUniqueId(),new Distance(loopLoc.clone(),distance,true));
                                 }
                             } else {
-                                distances.put(player.getUniqueId(),new Distance(loopLoc.clone(),distance));
+                                distances.put(player.getUniqueId(),new Distance(loopLoc.clone(),distance,true));
                             }
 
                         }
@@ -109,10 +109,10 @@ public class BorderHologram extends JavaPlugin implements Listener {
                             double distance = loopLoc.distance(player.getLocation());
                             if (distances.containsKey(player.getUniqueId())) {
                                 if (distance < distances.get(player.getUniqueId()).getDistance()) {
-                                    distances.put(player.getUniqueId(),new Distance(loopLoc.clone(),distance));
+                                    distances.put(player.getUniqueId(),new Distance(loopLoc.clone(),distance,false));
                                 }
                             } else {
-                                distances.put(player.getUniqueId(),new Distance(loopLoc.clone(),distance));
+                                distances.put(player.getUniqueId(),new Distance(loopLoc.clone(),distance,false));
                             }
 
                         }
@@ -122,7 +122,16 @@ public class BorderHologram extends JavaPlugin implements Listener {
                     for (UUID uuid : distances.keySet()) {
                         Player player = Bukkit.getPlayer(uuid);
                         if (holograms.containsKey(uuid)) {
-                            holograms.get(uuid).moveTo(distances.get(uuid).getLoc().clone());
+                            Location spawnLocation = distances.get(uuid).getLoc().clone();
+                            Location playerLoc = player.getLocation();
+
+                            if (distances.get(uuid).isGoingOnX()) {
+                                spawnLocation.setX(spawnLocation.getBlockX() + (playerLoc.getX() - ((int) playerLoc.getX())));
+                            } else {
+                                spawnLocation.setZ(spawnLocation.getBlockZ() + (playerLoc.getZ() - ((int) playerLoc.getZ())));;
+                            }
+                            holograms.get(uuid).moveTo(spawnLocation);
+
                         } else {
                             Hologram hologram = new Hologram(distances.get(uuid).getLoc().clone(),player,BorderHologram.this);
                             hologram.spawn();
@@ -161,5 +170,11 @@ public class BorderHologram extends JavaPlugin implements Listener {
         for (UUID uuid:holograms.keySet()) {
             holograms.get(uuid).despawn();
         }
+    }
+
+    public static void main(String[] args) {
+        double number = 69.4201;
+
+        System.out.println(number - ((int)number));
     }
 }
