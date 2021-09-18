@@ -1,0 +1,18 @@
+# in min location x and z coordinates should be smaller than maxLocation's x and z coordinates
+# otherwise, it won't work :P
+borderLocation:
+  world:
+  y:
+  minLocation:
+    x:
+    z:
+  maxLocation:
+    x:
+    z:
+radius: 4
+moveHologramY: 0.5
+spaceBetweenLines: 0.4
+hologram:
+  - "Test Message"
+  - "poggers idk"
+
