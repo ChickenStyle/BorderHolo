@@ -12,6 +12,10 @@ borderLocation:
 radius: 4
 moveHologramY: 0.5
 spaceBetweenLines: 0.4
+
+commandsToRun:
+  - "tell %player% you stepped on the line :)"
+
 hologram:
   - "Test Message"
   - "poggers idk"

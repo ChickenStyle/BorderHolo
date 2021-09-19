@@ -72,6 +72,37 @@ public class Hologram {
         }
     }
 
+    public BorderHologram getMain() {
+        return main;
+    }
+
+    public void setMain(BorderHologram main) {
+        this.main = main;
+    }
+
+    public Location getLoc() {
+        return loc;
+    }
+
+    public void setLoc(Location loc) {
+        this.loc = loc;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
+    public List<Line> getLines() {
+        return lines;
+    }
+
+    public void setLines(List<Line> lines) {
+        this.lines = lines;
+    }
 
     private class Line extends EntityArmorStand {
 

@@ -14,6 +14,7 @@ import org.bukkit.scheduler.BukkitTask;
 
 import java.awt.*;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 public class BorderHologram extends JavaPlugin implements Listener {
@@ -120,15 +121,26 @@ public class BorderHologram extends JavaPlugin implements Listener {
                     }
 
                     for (UUID uuid : distances.keySet()) {
+
                         Player player = Bukkit.getPlayer(uuid);
+                        Location playerLoc = player.getLocation();
                         if (holograms.containsKey(uuid)) {
                             Location spawnLocation = distances.get(uuid).getLoc().clone();
-                            Location playerLoc = player.getLocation();
+
 
                             if (distances.get(uuid).isGoingOnX()) {
                                 spawnLocation.setX(spawnLocation.getBlockX() + (playerLoc.getX() - ((int) playerLoc.getX())));
+                                if (spawnLocation.getBlockX() < 0) {
+                                    spawnLocation.add(1,0,0);
+                                }
                             } else {
                                 spawnLocation.setZ(spawnLocation.getBlockZ() + (playerLoc.getZ() - ((int) playerLoc.getZ())));;
+
+                                if (spawnLocation.getBlockZ() < 0) {
+                                    spawnLocation.add(0,0,1);
+                                }
+
+
                             }
                             holograms.get(uuid).moveTo(spawnLocation);
 
@@ -138,7 +150,14 @@ public class BorderHologram extends JavaPlugin implements Listener {
                             holograms.put(uuid,hologram);
                         }
 
+                        Location hologramLoc = holograms.get(uuid).getLoc();
 
+                        if (hologramLoc.getBlockX() == playerLoc.getBlockX() && hologramLoc.getBlockZ() == playerLoc.getBlockZ()) {
+
+                            for (String cmd : (List<String>)getConfig().get("commandsToRun"))  {
+                                getServer().dispatchCommand(Bukkit.getConsoleSender(),cmd.replace("%player%",player.getName()));
+                            }
+                        }
                     }
 
                     for (UUID uuid : holograms.keySet()) {
